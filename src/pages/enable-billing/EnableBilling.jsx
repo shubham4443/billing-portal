@@ -67,7 +67,7 @@ const EnableBilling = () => {
       title: 'Verify email',
       content: <React.Fragment>
         <Row>
-          <Col lg={{ span: 8, offset: 8 }}>
+          <Col lg={{ span: 8, offset: 8 }} xs={{ span: 24 }}>
             <VerifyAccount email={email} handleSubmit={handleVerify} handleResendVerificationCode={handleResendVerificationCode} />
           </Col>
         </Row>
@@ -76,7 +76,7 @@ const EnableBilling = () => {
     {
       title: 'Setup billing',
       content: <Row>
-        <Col lg={{ span: 8, offset: 8 }}>
+        <Col lg={{ span: 8, offset: 8 }} xs={{ span: 24 }}>
           <AddBillingDetails handleSubmit={handleAddBillingDetails} />
         </Col>
       </Row>

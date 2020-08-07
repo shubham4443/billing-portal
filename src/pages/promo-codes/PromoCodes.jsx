@@ -53,10 +53,10 @@ const PromoCodes = () => {
 
   const emptyState =
     <Row >
-      <Col lg={{ span: 12, offset: 5 }} style={{ textAlign: "center", marginTop: "72px" }}>
+      <Col lg={{ span: 12, offset: 5 }} xs={{ span: 24 }} style={{ textAlign: "center", marginTop: "72px" }}>
         <img src={emptyStateSvg} />
         <p style={{ margin: "16px 0 24px 0" }}>No promo codes applied to this billing account yet. Apply a promo code to get free credits!</p>
-        <Button style={{ width: "45%", borderRadius: "100px" }} size="large" type="primary" onClick={() => setApplyCouponModal(true)}>Apply a promo code</Button>
+        <Button style={{ width: "65%", borderRadius: "100px" }} size="large" type="primary" onClick={() => setApplyCouponModal(true)}>Apply a promo code</Button>
       </Col>
     </Row>
 
@@ -90,7 +90,7 @@ const PromoCodes = () => {
           {promoCodes.length === 0 && emptyState}
           {promoCodes.length > 0 && <React.Fragment>
             <h3 style={{ display: "flex", justifyContent: "space-between" }}>Applied promo codes<Button onClick={() => setApplyCouponModal(true)} type="primary">Apply a promo codes</Button></h3>
-            <Table columns={promoCodeColumn} dataSource={promoCodes} bordered style={{ marginTop: 16 }} />
+            <Table scroll={{ x: true }} columns={promoCodeColumn} dataSource={promoCodes} bordered style={{ marginTop: 16 }} />
           </React.Fragment>}
         </Content>
       </ProjectPageLayout>

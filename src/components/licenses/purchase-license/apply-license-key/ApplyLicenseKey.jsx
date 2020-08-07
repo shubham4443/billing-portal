@@ -63,13 +63,9 @@ const ApplyLicenseKey = ({ licenseId }) => {
 
           <Card style={{ margin: "24px 0 24px 0" }}>
             <h3>License Keys</h3>
-            <Table columns={column} dataSource={licenseKeys} pagination={false} bordered style={{ marginTop: 16 }} />
+            <Table scroll={{ x: true }} columns={column} dataSource={licenseKeys} pagination={false} bordered style={{ marginTop: 16 }} />
           </Card>
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={{ span: 4, offset: 10 }}>
-          <Link onClick={() => history.push(`/billing/${billingId}/licenses`)} >Skip this step</Link>
+          <center><Link onClick={() => history.push(`/billing/${billingId}/licenses`)} >Skip this step</Link></center>
         </Col>
       </Row>
       {applyKeyModalVisible && <LicenseKeyModal

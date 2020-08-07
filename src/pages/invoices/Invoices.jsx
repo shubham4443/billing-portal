@@ -35,7 +35,7 @@ const Invoices = () => {
 
   const emptyState =
     <Row >
-      <Col lg={{ span: 10, offset: 6 }} style={{ textAlign: "center", marginTop: "72px" }}>
+      <Col lg={{ span: 10, offset: 6 }} xs={{ span: 24 }} style={{ textAlign: "center", marginTop: "72px" }}>
         <img src={emptyStateSvg} />
         <p style={{ margin: "16px 0 24px 0" }}>No invoices for this billing account yet. You will see invoices as soon as you purchase a license!</p>
       </Col>
@@ -109,7 +109,7 @@ const Invoices = () => {
                 hasMore={hasMoreInvoices}
                 loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
               >
-                <Table columns={columns} dataSource={invoices} bordered style={{ marginTop: 16 }} />
+                <Table scroll={{ x: true }} columns={columns} dataSource={invoices} bordered style={{ marginTop: 16 }} />
               </InfiniteScroll>
             </React.Fragment>
           }

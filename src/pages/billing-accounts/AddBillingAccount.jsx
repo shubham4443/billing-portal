@@ -39,7 +39,7 @@ const AddBillingAccount = () => {
         <InnerTopBar title="Add a billing account" />
         <Content>
           <Row>
-            <Col lg={{ span: 12, offset: 6 }}>
+            <Col lg={{ span: 12, offset: 6 }} xs={{ span: 24 }}>
               <AddBillingDetails handleSubmit={handleAddBillingDetails} />
             </Col>
           </Row>

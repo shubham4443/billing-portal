@@ -5,7 +5,7 @@ const ContactForm = ({ subject, handleSubmit }) => {
   const handleSubmitClick = ({ subject, message }) => handleSubmit(subject, message)
   return (
     <Row>
-      <Col xl={{ span: 10, offset: 7 }} lg={{ span: 18, offset: 3 }}>
+      <Col xl={{ span: 10, offset: 7 }} lg={{ span: 18, offset: 3 }} xs={{ span: 24 }}>
         <Card style={{ borderRadius: '10px', padding: '24px' }}>
           <Form initialValues={{ subject }} onFinish={handleSubmitClick}>
             <p><b>Subject</b></p>

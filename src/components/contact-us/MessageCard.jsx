@@ -6,7 +6,7 @@ const MessageCard = () => {
 
 	return (
 		<Row>
-			<Col xl={{ span: 10, offset: 7 }} lg={{ span: 18, offset: 3 }}>
+			<Col xl={{ span: 10, offset: 7 }} lg={{ span: 18, offset: 3 }} xs={{ span: 24 }}>
 				<Card style={{ borderRadius: '10px', padding: '18px', textAlign: "center", marginBottom: "32px" }}>
 					<Avatar size={64} style={{ backgroundColor: 'rgba(255, 103, 0, 0.2)' }}>
 						<MailOutlined />

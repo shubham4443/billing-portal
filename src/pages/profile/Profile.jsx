@@ -9,6 +9,7 @@ import { getProfile, changePassword } from '../../operations/userManagement';
 import { useSelector } from 'react-redux';
 import ChangePassword from "../../components/change-password/ChangePassword";
 import { incrementPendingRequests, decrementPendingRequests, notify, formatDate } from '../../utils';
+import './profile.css';
 
 const Profile = () => {
   useEffect(() => {
@@ -44,17 +45,17 @@ const Profile = () => {
       <ProjectPageLayout>
         <Content>
           <Row>
-            <Col lg={{ span: 16 }}>
+            <Col lg={{ span: 16 }} xs={{ span: 24 }}>
               <Card >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div className='profile-card'>
                   <div style={{ display: "inline-flex", alignItems: "start" }}>
                     <img src={avatarSvg} />
                     <div style={{ display: "inline-block", marginLeft: 16 }}>
-                      <p style={{ color: "rgba(0,0,0,0.87)", marginBottom: 4 }}>{name}</p>
-                      <p style={{ color: "rgba(0,0,0,0.45)", marginBottom: 4 }}>{encrypted_email}</p>
+                      <p style={{ color: "rgba(0,0,0,0.87)", marginBottom: 4 }}>{/*name*/}Saif Ali Kamal</p>
+                      <p style={{ color: "rgba(0,0,0,0.45)", marginBottom: 4 }}>{/*encrypted_email*/}saif@gmail.com</p>
                       <div style={{ color: "rgba(0,0,0,0.45)", marginBottom: 4, display: "flex", alignItems: "center" }}>
                         <i className="material-icons-outlined" style={{ fontSize: 16 }}>calendar_today</i>
-                        <span style={{ marginLeft: 8 }}>{formatDate(creation_date)}</span>
+                          <span style={{ marginLeft: 8 }}>{/*{formatDate(creation_date)}*/}{formatDate(Date.now())}</span>
                       </div>
                     </div>
                   </div>

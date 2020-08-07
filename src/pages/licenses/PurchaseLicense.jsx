@@ -66,7 +66,7 @@ const PurchaseLicense = () => {
     title: 'Select license',
     content: <React.Fragment>
       <Row>
-        <Col lg={{ span: 18, offset: 3 }}>
+        <Col lg={{ span: 18, offset: 3 }} xs={{ span: 24 }}>
           <SelectPlan handleContactUs={handleContactUs} handleSelectPlan={handleSelectPlan} plans={plans} />
         </Col>
       </Row>
@@ -75,7 +75,7 @@ const PurchaseLicense = () => {
   {
     title: 'Start subscription',
     content: <Row>
-      <Col lg={{ span: 12, offset: 6 }}>
+      <Col lg={{ span: 12, offset: 6 }} xs={{ span: 24 }}>
         <SubscriptionDetail handleSuccess={handlePurchaseLicense} planDetails={selectedPlanDetails} creditCards={cards} />
       </Col>
     </Row>
@@ -83,7 +83,7 @@ const PurchaseLicense = () => {
   {
     title: 'Apply license key',
     content: <Row>
-      <Col lg={{ span: 18, offset: 3 }}>
+      <Col lg={{ span: 18, offset: 3 }} xs={{ span: 24 }}>
         <ApplyLicenseKey licenseId={purchasedLicenseId} />
       </Col>
     </Row>
@@ -97,7 +97,7 @@ const PurchaseLicense = () => {
         <InnerTopBar title='Purchase license' />
         <Content>
           <Row>
-            <Col xl={{ span: 14, offset: 5 }} lg={{ span: 20, offset: 2 }} xs={{ span: 24 }} >
+            <Col xl={{ span: 14, offset: 5 }} lg={{ span: 20, offset: 2 }} xs={{ span: 24 }}>
               <Steps current={current} className="upgrade-steps" size="small">
                 {steps.map(item => (
                   <Step key={item.title} title={item.title} />

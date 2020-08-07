@@ -90,7 +90,7 @@ const BillingAccounts = () => {
     return (
       <div>
         <h3 style={{ display: "flex", justifyContent: "space-between" }}>Cards <Button type="primary" ghost onClick={handleClickAddCard}>Add a card</Button></h3>
-        <Table columns={cardsColumn} dataSource={cards} pagination={false} bordered style={{ marginTop: 16 }} rowKey="id" />
+        <Table scroll={{ x: true }} columns={cardsColumn} dataSource={cards} pagination={false} bordered style={{ marginTop: 16 }} rowKey="id" />
       </div>
     );
   }
@@ -108,6 +108,7 @@ const BillingAccounts = () => {
             dataSource={billingAccounts}
             expandable={{ expandedRowRender, expandIcon: TableExpandIcon }}
             bordered
+            scroll={{ x: true }}
             style={{ marginTop: 16 }} />
         </Content>
       </ProjectPageLayout>

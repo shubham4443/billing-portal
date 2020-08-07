@@ -186,10 +186,10 @@ const Licenses = () => {
 
   const emptyState =
     <Row >
-      <Col lg={{ span: 10, offset: 6 }} style={{ textAlign: "center", marginTop: "72px" }}>
+      <Col lg={{ span: 10, offset: 6 }} xs={{ span:24 }} style={{ textAlign: "center", marginTop: "72px" }}>
         <img src={emptyCartSvg} />
         <p style={{ margin: "16px 0 24px 0" }}>No Space Cloud licenses purchased yet through this billing account</p>
-        <Button style={{ width: "55%", borderRadius: "100px" }} size="large" type="primary" onClick={handlePurchaseClick}>Purchase a license</Button>
+        <Button style={{ width: "65%", borderRadius: "100px" }} size="large" type="primary" onClick={handlePurchaseClick}>Purchase a license</Button>
       </Col>
     </Row>
 
@@ -203,6 +203,7 @@ const Licenses = () => {
           {noOfLicenses > 0 && <React.Fragment>
             <h3 style={{ display: "flex", justifyContent: "space-between" }}>Licenses <Button onClick={handlePurchaseClick} type="primary">Purchase a license</Button></h3>
             <Table
+              scroll={{x: true}}
               rowKey="id"
               style={{ marginTop: 16 }}
               columns={licenseColumn}

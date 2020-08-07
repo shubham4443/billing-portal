@@ -23,11 +23,9 @@ const Signup = () => {
   return (
     <React.Fragment>
       <div className='signup-background'>
-        <Row align="middle" style={{ height: "100%" }}>
-          <Col xl={{ span: 10, offset: 7 }} lg={{ span: 12, offset: 6 }} md={{ span: 18, offset: 3 }} sm={{ span: 21, offset: 1 }}>
-            <SignupForm handleSubmit={handleSignup} />
-          </Col>
-        </Row>
+        <div className='signup-card'>
+          <SignupForm handleSubmit={handleSignup} />
+        </div>
       </div>
     </React.Fragment>
   );

@@ -36,7 +36,7 @@ const AddCard = () => {
         <InnerTopBar title="Add a card" />
         <Content>
           <Row>
-            <Col lg={{ span: 8, offset: 8 }}>
+            <Col lg={{ span: 12, offset: 6 }} xl={{ span: 10, offset: 7 }} xs={{ span: 24 }}>
               <AddCardDetails handleSubmit={handleAddCardDetails} />
             </Col>
           </Row>
