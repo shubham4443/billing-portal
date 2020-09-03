@@ -35,5 +35,5 @@ const getURL = (productionURL, developmentURL, mockURL) => {
   return developmentURL
 }
 
-export const spaceSiteServerURL = getURL("https://api.spaceuptech.com", "https://api.spaceuptech.com", undefined)
+export const spaceSiteServerURL = getURL("https://testing.spaceuptech.com", "https://testing.spaceuptech.com", undefined)
 export const billingServerGraphQLURL = getURL("https://testing.spaceuptech.com/v1/api/spacecloud/graphql", "https://testing.spaceuptech.com/v1/api/spacecloud/graphql", "/v1/api/spacecloud/graphql")
