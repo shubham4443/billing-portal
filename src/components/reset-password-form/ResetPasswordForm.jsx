@@ -1,10 +1,12 @@
 import React from 'react';
 import { Card, Form, Input, Button } from 'antd';
+import PasswordField from '../password-field/PasswordField';
+import OtpInputField from '../otp-input-field/OtpInputField';
 
 const ResetPasswordForm = (props) => {
 
   const handleSubmitClick = (values) => {
-    props.handleSubmit(values.verificationCode, values.password);
+    props.handleSubmit(values.otp, values.password);
   }
 
   return (
@@ -16,18 +18,15 @@ const ResetPasswordForm = (props) => {
         </center>
         <Form style={{ marginTop: 24 }} onFinish={handleSubmitClick}>
           <p><b>Verification code</b></p>
-          <Form.Item>
-            <Form.Item name='verificationCode' noStyle rules={[{ required: true, message: 'Please input verification code!' }]}>
-              <Input.Password placeholder="6 digit verfication code" />
-            </Form.Item>
-            <div style={{ marginTop: 8, color: "rgba(0,0,0,0.45)" }}>Did not recieve any verification code? <a onClick={props.handleResendVerificationCode}>Resend code</a></div>
+          <Form.Item name='otp' noStyle rules={[{ required: true, message: 'Please input six digit verification code!', len:6 }]}>
+            <OtpInputField />
           </Form.Item>
+          <div style={{ marginTop: 8, color: "rgba(0,0,0,0.45)" }}>Did not recieve any verification code? <a onClick={props.handleResendVerificationCode}>Resend code</a></div>
+          <br/>
           <p><b>New password</b></p>
-          <Form.Item name='password' rules={[{ required: true, message: 'Please input new password code!' }]}>
-            <Input.Password placeholder="Your new password" />
-          </Form.Item>
+          <PasswordField fieldName="password" />
           <Form.Item style={{ marginTop: 16 }} noStyle>
-            <Button type='primary' block size="large" htmlType="submit">Reset password</Button>
+            <Button type='primary' block size="large" style={{ marginTop:'32px' }} htmlType="submit">Reset password</Button>
           </Form.Item>
         </Form>
       </Card>
