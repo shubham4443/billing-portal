@@ -1,4 +1,4 @@
-export const stripeKey = "pk_test_86Z4cMrqx8qC7bHLa0nLeQYs00D1MqsudX"
+export const stripeKey = "pk_live_Lq674TgqtTSAxQSdVZOZDn9300jIWrJyoh"
 // export const plans = [
 //   {
 //     id: "space-cloud-pro--monthly",
@@ -35,5 +35,5 @@ const getURL = (productionURL, developmentURL, mockURL) => {
   return developmentURL
 }
 
-export const spaceSiteServerURL = getURL("https://testing.spaceuptech.com", "https://testing.spaceuptech.com", undefined)
-export const billingServerGraphQLURL = getURL("https://testing.spaceuptech.com/v1/api/spacecloud/graphql", "https://testing.spaceuptech.com/v1/api/spacecloud/graphql", "/v1/api/spacecloud/graphql")
+export const spaceSiteServerURL = getURL("https://api.spaceuptech.com", "https://api.spaceuptech.com", undefined)
+export const billingServerGraphQLURL = getURL("https://api.spaceuptech.com/v1/api/spacecloud/graphql", "https://api.spaceuptech.com/v1/api/spacecloud/graphql", "/v1/api/spacecloud/graphql")
