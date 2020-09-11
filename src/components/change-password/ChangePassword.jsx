@@ -1,8 +1,10 @@
 import React from 'react';
 import { Modal, Form, Input } from 'antd';
+import PasswordField from '../password-field/PasswordField';
 
 const ChangePassword = ({ handleSubmit, handleCancel }) => {
   const [form] = Form.useForm()
+
   const handleOk = () => {
     form.validateFields()
       .then((values) => {
@@ -23,9 +25,7 @@ const ChangePassword = ({ handleSubmit, handleCancel }) => {
           <Input.Password placeholder='Current password' />
         </Form.Item>
         <p><b>New password</b></p>
-        <Form.Item name='newPassword' rules={[{ required: true, message: 'Please input new password!' }]}>
-          <Input.Password placeholder='New password' />
-        </Form.Item>
+        <PasswordField fieldName="newPassword"/>
       </Form>
     </Modal>
   );

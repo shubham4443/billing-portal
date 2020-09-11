@@ -1,26 +1,52 @@
 import gql from 'graphql-tag';
 class UserManagement {
-  constructor(client, spaceSiteClient) {
+  constructor(client, ipAPIClient) {
     this.client = client;
-    this.spaceSiteClient = spaceSiteClient;
+    this.ipAPIClient = ipAPIClient;
   }
 
-  signUp(name, organizationName, email, password) {
+  fetchIpAddress() {
+    return new Promise((resolve, reject) => {
+      this.ipAPIClient.getJSON("https://ipapi.co/json/")
+        .then(({ status, data }) => {
+          if (status !== 200) {
+            reject(new Error("Could not fetch ip address"))
+            return
+          }
+
+          const { ip: sourceIp, country_code: countryCode } = data
+          if (!sourceIp || !countryCode) {
+            reject(new Error("Did not receive ip address or country code"))
+            return
+          }
+
+          resolve({ sourceIp, countryCode })
+        })
+        .catch(ex => reject(ex))
+    })
+  }
+
+  signUp(name, organizationName, email, password, sourceIp, countryCode) {
 
     return new Promise((resolve, reject) => {
       this.client.query({
         query: gql`
         query {
-          signUp(name: $name, organizationName: $organizationName, email: $email, password: $password) @users {
+          signUp(name: $name, organizationName: $organizationName, email: $email, password: $password, sourceIp: $sourceIp, countryCode: $countryCode) @users {
             status
             error
             message
             result
           }
         }`,
-        variables: { name, organizationName, email, password }
+        variables: { name, organizationName, email, password, sourceIp, countryCode }
       })
         .then(res => {
+          if (res.errors && res.errors.length > 0) {
+            reject(res.errors[0].message)
+            return
+          }
+          
           const { status, error, message, result } = res.data.signUp
           if (status !== 200) {
             reject(message)
@@ -56,6 +82,11 @@ class UserManagement {
         variables: { email, password }
       })
         .then(res => {
+          if (res.errors && res.errors.length > 0) {
+            reject(res.errors[0].message)
+            return
+          }
+
           const { status, error, message, result } = res.data.signIn
           if (status !== 200) {
             reject(message)
@@ -87,9 +118,10 @@ class UserManagement {
       })
         .then(res => {
           if (res.errors && res.errors.length > 0) {
-            reject(res.errors[0])
+            reject(res.errors[0].message)
             return
           }
+
           const { status, error, message, result } = res.data.fetchProfile
           if (status !== 200) {
             reject(message)
@@ -97,7 +129,12 @@ class UserManagement {
             return
           }
 
-          resolve(result && result.length > 0 ? result[0] : {})
+          if (result && result.length > 0 && result[0]) {
+            resolve(result[0])
+            return
+          }
+
+          reject("No profile received")
         })
         .catch(ex => reject(ex))
     })
@@ -117,6 +154,11 @@ class UserManagement {
         variables: { email }
       })
         .then(res => {
+          if (res.errors && res.errors.length > 0) {
+            reject(res.errors[0].message)
+            return
+          }
+
           const { status, error, message } = res.data.forgotPassGenerateCode
           if (status !== 200) {
             reject(message)
@@ -144,6 +186,11 @@ class UserManagement {
         variables: { code, password }
       })
         .then(res => {
+          if (res.errors && res.errors.length > 0) {
+            reject(res.errors[0].message)
+            return
+          }
+
           const { status, error, message } = res.data.forgotPassVerifyCode
           if (status !== 200) {
             reject(message)
@@ -171,6 +218,11 @@ class UserManagement {
         variables: { oldPassword, newPassword }
       })
         .then(res => {
+          if (res.errors && res.errors.length > 0) {
+            reject(res.errors[0].message)
+            return
+          }
+
           const { status, error, message } = res.data.changePassword
           if (status !== 200) {
             reject(message)
@@ -199,6 +251,11 @@ class UserManagement {
         variables: { code }
       })
         .then(res => {
+          if (res.errors && res.errors.length > 0) {
+            reject(res.errors[0].message)
+            return
+          }
+
           const { status, error, message, result } = res.data.verifyEmail
           if (status !== 200) {
             reject(message)
@@ -226,6 +283,11 @@ class UserManagement {
         variables: {}
       })
         .then(res => {
+          if (res.errors && res.errors.length > 0) {
+            reject(res.errors[0].message)
+            return
+          }
+
           const { status, error, message } = res.data.resendVerificatIonEmail
           if (status !== 200) {
             reject(message)

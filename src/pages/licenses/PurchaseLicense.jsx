@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 import { Row, Col, Steps } from 'antd';
-import { useHistory, useParams } from 'react-router';
+import { useHistory, useParams, useLocation } from 'react-router';
 import Sidenav from '../../components/sidenav/Sidenav';
 import Topbar from '../../components/topbar/Topbar';
 import ProjectPageLayout, { InnerTopBar, Content } from '../../components/project-page-layout/ProjectPageLayout';
@@ -17,19 +17,24 @@ import { loadPlans, getPlans } from '../../operations/plans';
 const { Step } = Steps;
 
 const PurchaseLicense = () => {
+
+  const history = useHistory();
+  const { billingId } = useParams();
+  const { state } = useLocation()
+  const previousPath = state && state.from ? state.from : undefined
+
   useEffect(() => {
     ReactGA.pageview("/billing/licenses/purchase-license");
   }, [])
 
   useEffect(() => {
-    incrementPendingRequests()
-    loadPlans()
-      .catch((ex) => notify("error", "Error fetching plans", ex))
-      .finally(() => decrementPendingRequests())
-  }, [])
-
-  const history = useHistory();
-  const { billingId } = useParams();
+    if (billingId) {
+      incrementPendingRequests()
+      loadPlans(billingId)
+        .catch((ex) => notify("error", "Error fetching plans", ex))
+        .finally(() => decrementPendingRequests())
+    }
+  }, [billingId])
 
   // Component state
   const [current, setCurrent] = useState(0);
@@ -94,7 +99,7 @@ const PurchaseLicense = () => {
       <Topbar showBillingSelector />
       <Sidenav selectedItem='licenses' />
       <ProjectPageLayout>
-        <InnerTopBar title='Purchase license' />
+        <InnerTopBar title='Purchase license' previousPath={previousPath} />
         <Content>
           <Row>
             <Col xl={{ span: 14, offset: 5 }} lg={{ span: 20, offset: 2 }} xs={{ span: 24 }}>

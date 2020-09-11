@@ -7,20 +7,19 @@ import store from './store';
 import ReactGA from 'react-ga';
 import { makeServer } from "./mirage/server";
 import './index.css';
-import { performOnAppLoadActions, markSetupComplete, notify } from './utils';
+import { performOnAppLoadActions, markSetupComplete } from './utils';
 
 if (process.env.NODE_ENV === "production") {
   ReactGA.initialize('UA-104521884-3');
 }
 
-if (process.env.NODE_ENV !== 'production' && !process.env.REACT_APP_DISABLE_MOCK) {
+if (process.env.NODE_ENV !== 'production' && process.env.REACT_APP_ENABLE_MOCK) {
   makeServer();
 }
 
 // Perform things to be done on load/reload
 performOnAppLoadActions()
-  .then(() => markSetupComplete())
-  .catch(ex => notify("error", "Error loading data", ex))
+  .finally(() => markSetupComplete())
 
 ReactDOM.render(
   <Provider store={store}>

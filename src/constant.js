@@ -21,15 +21,19 @@ export const countryPlanSuffixMapping = {
   "IN": "inr"
 }
 
+export const getCurrencyByCountryCode = (countryCode) => {
+  return countryPlanSuffixMapping[countryCode] ? countryPlanSuffixMapping[countryCode] : "usd"
+}
+
 const getURL = (productionURL, developmentURL, mockURL) => {
   if (process.env.NODE_ENV === "production") {
     return productionURL
   }
-  if (process.env.REACT_APP_DISABLE_MOCK === "true") {
-    return developmentURL
+  if (process.env.REACT_APP_ENABLE_MOCK === "true") {
+    return mockURL
   }
-  return mockURL
+  return developmentURL
 }
 
-export const spaceSiteServerURL = getURL("https://api.spaceuptech.com", "https://api.spaceuptech.com", undefined)
+export const spaceSiteServerURL = getURL("https://testing.spaceuptech.com", "https://testing.spaceuptech.com", undefined)
 export const billingServerGraphQLURL = getURL("https://testing.spaceuptech.com/v1/api/spacecloud/graphql", "https://testing.spaceuptech.com/v1/api/spacecloud/graphql", "/v1/api/spacecloud/graphql")

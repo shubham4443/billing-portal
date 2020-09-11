@@ -6,12 +6,14 @@ import ProjectPageLayout, { InnerTopBar, Content } from '../../components/projec
 import AddCardDetails from "../../components/billing-accounts/AddCardDetails";
 import { Row, Col } from 'antd';
 import { incrementPendingRequests, decrementPendingRequests, notify } from '../../utils';
-import { useHistory, useParams } from 'react-router';
+import { useHistory, useParams, useLocation } from 'react-router';
 import { addCard } from '../../operations/billingAccount';
 
 const AddCard = () => {
   const history = useHistory()
   const { billingId } = useParams()
+  const { state } = useLocation()
+  const previousPath = state && state.from ? state.from : undefined
 
   useEffect(() => {
     ReactGA.pageview('/billing/billing-accounts/add-card');
@@ -22,7 +24,9 @@ const AddCard = () => {
     addCard(billingId, stripeClient, cardElement)
       .then(() => {
         notify("success", "Success", "Added card successfully")
-        history.goBack()
+        if (previousPath) {
+          history.push(previousPath)
+        }
       })
       .catch((ex) => notify("error", "Error adding card details", ex))
       .finally(() => decrementPendingRequests())
@@ -33,10 +37,10 @@ const AddCard = () => {
       <Topbar showBillingSelector />
       <Sidenav selectedItem='billing-accounts' />
       <ProjectPageLayout>
-        <InnerTopBar title="Add a card" />
+        <InnerTopBar title="Add a card" previousPath={previousPath} />
         <Content>
           <Row>
-            <Col lg={{ span: 12, offset: 6 }} xl={{ span: 10, offset: 7 }} xs={{ span: 24 }}>
+            <Col lg={{ span: 12, offset: 6 }} xs={{ span: 24 }}>
               <AddCardDetails handleSubmit={handleAddCardDetails} />
             </Col>
           </Row>

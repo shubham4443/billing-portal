@@ -7,7 +7,7 @@ import history from "./history";
 import { loadBillingAccounts } from './operations/billingAccount';
 import { increment, decrement, set, get } from 'automate-redux';
 
-const months = ["Jan", "Feb", "March", "April", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 export function incrementPendingRequests() {
   store.dispatch(increment("pendingRequests"))
@@ -26,7 +26,7 @@ export function isSetupComplete(state) {
 }
 
 export const notify = (type, title, msg, duration) => {
-  notification[type]({ message: title, description: String(msg), duration: duration });
+  notification[type]({ message: title, description: String(msg), duration: type === 'error' ? 0 : duration });
 }
 
 export function capitalizeFirstCharacter(str) {
@@ -79,13 +79,44 @@ export function openBillingAccount(billingId) {
 
   const billingAccounts = getProfileBillingAccounts(store.getState())
 
-  // Use the first billing account from the profile if no billing id specified
-  // or if the specified billing id is no more present in the user's profile
-  if (!billingId || billingAccounts.findIndex(obj => obj.id === billingId) === -1) {
-    billingId = billingAccounts[0].id
+  if (!billingId) {
+    // Return if no billing accounts present in the profile
+    if (!billingAccounts || !billingAccounts.length) {
+      return
+    }
+
+    // Use the first billing account from the profile if no billing id specified
+    // or if the specified billing id is no more present in the user's profile
+    if (billingAccounts.findIndex(obj => obj.id === billingId) === -1) {
+      billingId = billingAccounts[0].id
+    }
+  }
+  
+  const pathName = window.location.pathname
+  const pathArray = pathName.split("/")
+  const currentSelectedBillingId = pathArray[2]
+
+  // Return if the billing id to be opened is already opened
+  if (billingId === currentSelectedBillingId) {
+    return
   }
 
-  history.push(`/billing/${billingId}`)
+  store.dispatch(set("invoices", []))
+
+  // Form the new path to be opened.
+  // This path should have the same url with the the only billing id changed if the previous path was a billing path.
+  // Or else this path should just open the home page of a billing account
+  const isCurrentPathABillingPath = pathName.startsWith("/billing")
+  let newPath = `/billing/${billingId}`
+  if (isCurrentPathABillingPath) {
+    pathArray[2] = billingId
+    newPath = pathArray.join("/")
+  }
+
+  history.push(newPath)
+
+  // Save the billing id in local storage 
+  setLastOpenedBillingAccount(billingId)
 }
 
 export function performOnTokenActions() {
@@ -121,7 +152,13 @@ export function performOnAppLoadActions() {
       return
     }
     if (loggedIn) {
-      performOnTokenActions().then(() => resolve()).catch((ex) => reject(ex))
+      performOnTokenActions()
+        .then(() => resolve())
+        .catch((ex) => {
+          console.log("Error loading profile", ex)
+          history.push("/signup")
+          reject(ex)
+        })
       return
     }
     resolve()

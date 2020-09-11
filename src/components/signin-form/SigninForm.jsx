@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Card, Button } from 'antd';
+import spaceUpLogo from '../../assets/logo-black.svg';
 
 const SigninForm = (props) => {
 
@@ -10,6 +11,7 @@ const SigninForm = (props) => {
   return (
     <React.Fragment>
       <Card style={{ marginBottom: '16px', padding: 24 }}>
+        <center><img src={spaceUpLogo} style={{ marginBottom: '16px' }} /></center>
         <Form onFinish={handleSubmitClick}>
           <p><b>Email</b></p>
           <Form.Item name='email' rules={[{ required: true, message: 'Please input your professional email address' }]}>
@@ -26,7 +28,7 @@ const SigninForm = (props) => {
       </Card>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <p style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Need an account?
-          <a style={{ color: '#ffffff' }} href="/signup">Signup</a>
+          <a style={{ color: '#ffffff' }} href="/signup"> Signup</a>
         </p>
         <a style={{ color: '#ffffff' }} href="/forget-password" >Forget password?</a>
       </div>
