@@ -109,12 +109,12 @@ const Licenses = () => {
       {
         title: 'Action',
         key: 'action',
-        render: (_, { key, meta }) => (
+        render: (_, { key, session_id }) => (
           <React.Fragment>
             <Tooltip title={status === "deactivated" ? "Cannot apply a deactivated license key" : ""}>
               <Button type="link" disabled={status === "deactivated"} style={{ marginRight: 16 }} onClick={() => handleApplykey(id, key)}>Apply license key</Button>
             </Tooltip>
-            {meta && meta.clusterName && (
+            {session_id && (
               <Popconfirm title={`This will downgrade the associated cluster to Opensource plan. Are you sure?`} onConfirm={() => handleClickRevokeLicenseKey(id, key)}>
                 <a style={{ color: "red" }}>Revoke</a>
               </Popconfirm>
